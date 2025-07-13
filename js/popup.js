@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const GROQ_API_KEY = "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";
+    const GOOGLE_API_KEY = "AIzaSyDPg-FHJt87jH6_RxyFYwPBUvToIQfAUxg";
 
     const promptInput = document.getElementById('prompt-input');
     const analyzeBtn = document.getElementById('analyze-btn');
@@ -37,9 +37,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             const [ratingRes, suggestionsRes, fixedPromptRes] = await Promise.all([
-                callGroq(ratingPrompt),
-                callGroq(suggestionsPrompt),
-                callGroq(fixPromptText)
+                callGoogleAI(ratingPrompt),
+                callGoogleAI(suggestionsPrompt),
+                callGoogleAI(fixPromptText)
             ]);
 
             updateUI(ratingRes, suggestionsRes, fixedPromptRes);
@@ -83,30 +83,31 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    async function callGroq(prompt) {
+    async function callGoogleAI(prompt) {
+        const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${GOOGLE_API_KEY}`;
+    
         const body = {
-            model: "meta-llama/llama-4-scout-17b-16e-instruct",
-            messages: [{ role: "user", content: prompt }],
+            contents: [{
+                parts: [{ "text": prompt }]
+            }]
         };
 
-        const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+        const response = await fetch(API_URL, {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${GROQ_API_KEY}`,
-            },
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify(body),
         });
 
         if (!response.ok) {
             const errorText = await response.text();
-            throw new Error(`Groq API Error: ${response.status} ${errorText}`);
+            throw new Error(`Google AI API Error: ${response.status} ${errorText}`);
         }
 
         const json = await response.json();
-        if (!json.choices || json.choices.length === 0) {
-            throw new Error("Invalid response from Groq API");
+        if (!json.candidates || !json.candidates[0]?.content?.parts[0]?.text) {
+            console.error("Invalid response format from Google AI:", json);
+            throw new Error("Invalid response from Google AI API");
         }
-        return json.choices[0].message.content.trim();
+        return json.candidates[0].content.parts[0].text.trim();
     }
 }); 

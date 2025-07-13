@@ -1,52 +1,130 @@
-/* --- Styles for Injected Floating UI --- */
-
+/* Main container for the on-page UI */
 #chit-chat-container {
     position: fixed;
     bottom: 20px;
     right: 20px;
+    z-index: 9999;
+}
+
+/* The trigger button (sparkle icon) */
+.chit-chat-trigger-btn {
     width: 48px;
     height: 48px;
     background-color: #3b82f6;
     color: white;
-    border-radius: 24px;
+    border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 24px;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     cursor: pointer;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    z-index: 9999;
-    transition: all 0.3s ease;
+    transition: transform 0.2s ease;
 }
 
-#chit-chat-container.analysis-mode {
-    width: 300px;
-    justify-content: space-between;
-    padding: 0 10px 0 16px;
+.chit-chat-trigger-btn:hover {
+    transform: scale(1.1);
 }
 
-.strength-display {
+/* The panel that appears on hover */
+.chit-chat-hover-panel {
+    position: absolute;
+    bottom: 60px; /* Position above the button */
+    right: 0;
+    width: 250px;
+    background-color: white;
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: #333;
+    border: 1px solid #e5e7eb;
+
+    /* Hide by default and manage interaction */
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    pointer-events: none;
+}
+
+/* Show the panel when it has the .visible class */
+.chit-chat-hover-panel.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto; /* Allow interaction when visible */
+}
+
+.chit-chat-hover-panel p {
     font-size: 14px;
-    font-weight: 500;
+    line-height: 1.4;
+    margin: 0 0 12px 0;
+    color: #4b5563;
 }
 
-.strength-text.weak { color: #fef2f2; }
-.strength-text.moderate { color: #fffbeb; }
-.strength-text.strong { color: #f0fdf4; }
-
-.fix-prompt-btn-onpage {
-    background-color: rgba(255, 255, 255, 0.2);
+#analyze-onpage-btn {
+    width: 100%;
+    background-color: #3b82f6;
     color: white;
     border: none;
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 600;
-    padding: 6px 12px;
-    border-radius: 16px;
+    padding: 10px;
+    border-radius: 6px;
     cursor: pointer;
-    transition: background-color 0.2s ease;
+    text-align: center;
 }
 
-.fix-prompt-btn-onpage:hover {
-    background-color: rgba(255, 255, 255, 0.3);
+#analyze-onpage-btn:hover {
+    background-color: #2563eb;
+}
+
+/* --- Panel Result Sections --- */
+
+.cc-panel-section {
+    width: 100%;
+    padding-top: 12px;
+    margin-top: 12px;
+    border-top: 1px solid #f3f4f6;
+}
+
+.cc-panel-section:first-child {
+    padding-top: 0;
+    margin-top: 0;
+    border-top: none;
+}
+
+.cc-strength-badge, .cc-suggestions, .cc-fixed-prompt {
+    margin-bottom: 12px;
+    font-size: 14px;
+}
+.cc-strength-badge:last-child, .cc-suggestions:last-child, .cc-fixed-prompt:last-child {
+    margin-bottom: 0;
+}
+
+.cc-strength-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.cc-strength-indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+.cc-strength-indicator.weak { background-color: #ef4444; }
+.cc-strength-indicator.moderate { background-color: #f97316; }
+.cc-strength-indicator.strong { background-color: #22c55e; }
+
+
+#cc-suggestions-text, #cc-fixed-prompt-text {
+    margin-top: 4px;
+    background-color: #f9fafb;
+    border: 1px solid #e5e7eb;
+    padding: 8px;
+    border-radius: 6px;
+    font-size: 13px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    color: #374151;
 } 
