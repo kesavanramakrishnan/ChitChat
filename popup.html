@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chit Chat</title>
+    <link rel="stylesheet" href="css/popup.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Chit Chat</h1>
+        </header>
+
+        <main>
+            <div class="prompt-section">
+                <label for="prompt-input">Enter your prompt:</label>
+                <textarea id="prompt-input" rows="5" placeholder="e.g., tell me about ai"></textarea>
+            </div>
+
+            <div class="actions">
+                <button id="analyze-btn">Analyze Prompt</button>
+            </div>
+
+            <div id="results-section" class="hidden">
+                <div class="strength-badge">
+                    <strong>Strength:</strong>
+                    <span class="strength-indicator"></span>
+                    <span id="strength-text"></span>
+                </div>
+                <div class="suggestions">
+                    <strong>Suggestions:</strong>
+                    <div id="suggestions-text"></div>
+                </div>
+                <div class="fixed-prompt">
+                    <strong>Revised Prompt:</strong>
+                    <div id="fixed-prompt-text"></div>
+                </div>
+            </div>
+            
+            <div class="settings">
+                <label for="toggle-on-page-ui">Show floating button on page</label>
+                <label class="switch">
+                    <input type="checkbox" id="toggle-on-page-ui">
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </main>
+    </div>
+    <script src="js/popup.js"></script>
+</body>
+</html> 
