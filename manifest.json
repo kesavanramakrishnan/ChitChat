@@ -1,13 +1,17 @@
 {
   "manifest_version": 3,
   "name": "ChitChat",
-  "description": "Enhances prompt writing on ChatGPT with real-time prompt evaluations and suggestions",
+  "description": "Enhances prompt writing on ChatGPT using multiple AI providers.",
   "version": "1.0",
   "permissions": [
     "storage"
   ],
   "host_permissions": [
-    "https://generativelanguage.googleapis.com/*"
+    "https://generativelanguage.googleapis.com/*",
+    "https://api.openai.com/*",
+    "https://api.anthropic.com/*",
+    "http://localhost:11434/*",
+    "http://127.0.0.1:11434/*"
   ],
   "action": {
     "default_popup": "popup.html"
@@ -19,6 +23,7 @@
       ],
       "js": [
         "config.js",
+        "prompts/prompts.js",
         "js/content.js"
       ],
       "css": [

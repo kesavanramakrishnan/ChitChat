@@ -1,0 +1,6 @@
+// Prompt templates for ChitChat extension
+const PROMPTS = {
+  "strengthPrompt": "Rate the following prompt based on its clarity, context given, intentions, and overall ease for an LLM to parse through. Return ONLY a number from 0-100, no other text. REMEMBER TO ONLY RETURN A SINGLE NUMBER, and do not return any other extraneous text or explaination behind the score. The prompt is: \n{{PROMPT}}",
+  "suggestionsPrompt": "Give two short tips to improve the following prompt that will be fed into an LLM. Focus on ideas like emphasizing a clear and concise response, adding in additional context, assuming no prerequisite knowledge on a topic, etc. The prompt is: \n{{PROMPT}}",
+  "fixPrompt": "The following is a prompt to an LLM. Make the prompt better by, for example, encouraging the model to have a clear and concise response, adding in additional assumed context, or assuming no prerequisite knowledge on a topic, etc.: Return just the new prompt and no other extraneous text. Do not by any means actually answer the prompt yourself. The prompt is: \n{{PROMPT}}"
+}; 
