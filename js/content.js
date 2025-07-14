@@ -167,7 +167,24 @@ function injectUI() {
         container.classList.remove('expanded');
     });
     
-    startListeningToPrompt();
+    // Manual analysis when clicking the progress bar (for testing)
+    container.querySelector('.cc-strength-progress-bar-container').addEventListener('click', (e) => {
+        e.stopPropagation(); // Prevent expanding the popup
+        const promptElement = getPromptElement();
+        const prompt = getPromptValue(promptElement);
+        if (prompt && prompt.trim().length >= 5) {
+            console.log("Manual analysis triggered by progress bar click");
+            handleAutoAnalysis(prompt);
+        } else {
+            console.log("Prompt too short for analysis");
+        }
+    });
+    
+    // COMMENTED OUT FOR TESTING - Auto-analysis functionality
+    // startListeningToPrompt();
+    
+    // Manual prompt listening start (for testing purposes)
+    startManualPromptListening();
 }
 
 function removeUI() {
@@ -182,6 +199,8 @@ let promptObserver = null;
 let promptInputListener = null;
 let lastPromptElement = null; // Keep a reference to the element we're listening to
 
+// COMMENTED OUT FOR TESTING - Original auto-analysis function
+/*
 function startListeningToPrompt() {
     stopListeningToPrompt(); // Ensure no duplicates
     const promptElement = getPromptElement();
@@ -210,6 +229,36 @@ function startListeningToPrompt() {
         const promptText = getPromptValue(promptElement);
         if (promptText && promptText.trim().length > 0) {
             debouncedAnalysis();
+        }
+    }
+}
+*/
+
+// Manual prompt listening (for testing) - monitors but doesn't auto-analyze
+function startManualPromptListening() {
+    stopListeningToPrompt(); // Ensure no duplicates
+    const promptElement = getPromptElement();
+    lastPromptElement = promptElement; // Store reference
+
+    if (promptElement) {
+        console.log("Manual prompt listening started - click progress bar to analyze");
+        
+        // Just monitor for prompt element changes without auto-analysis
+        const elementChecker = debounce(() => {
+            console.log("Prompt element detected and monitored");
+        }, 1000);
+
+        // Monitor the element but don't analyze automatically
+        if (promptElement.tagName.toLowerCase() === 'textarea') {
+            promptInputListener = elementChecker;
+            promptElement.addEventListener('input', promptInputListener);
+        } else {
+            promptObserver = new MutationObserver(elementChecker);
+            promptObserver.observe(promptElement, {
+                characterData: true,
+                childList: true,
+                subtree: true
+            });
         }
     }
 }
