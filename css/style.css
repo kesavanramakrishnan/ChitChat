@@ -382,9 +382,9 @@
 }
 
 #apply-prompt-btn {
-    margin-top: 12px;
-    padding: 10px 16px;
-    background: linear-gradient(135deg, #9c27b0 0%, #ab47bc 100%);
+    margin: 12px auto 0;
+    padding: 8px 14px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
     border: none;
     border-radius: 8px;
@@ -400,6 +400,8 @@
     font-family: inherit;
     position: relative;
     overflow: hidden;
+    display: block;
+    text-align: center;
 }
 
 #apply-prompt-btn::before {
@@ -418,11 +420,11 @@
 }
 
 #apply-prompt-btn:hover {
-    background: linear-gradient(135deg, #7e57c2 0%, #ab47bc 100%);
+    background: linear-gradient(135deg, #7c4dff 0%, #8e24aa 100%);
     box-shadow: 
         inset 0 1px 0 rgba(255, 255, 255, 0.2),
         0 1px 0 rgba(255, 255, 255, 0.1),
-        0 0 0 2px rgba(126, 87, 194, 0.2),
+        0 0 0 2px rgba(124, 77, 255, 0.2),
         0 6px 20px rgba(0, 0, 0, 0.15);
     transform: translateY(-1px);
 }
