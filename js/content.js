@@ -1,7 +1,7 @@
 console.log("Chit Chat content script loaded.");
 
 const CONTAINER_ID = 'chit-chat-container';
-const GOOGLE_API_KEY = "AIzaSyDPg-FHJt87jH6_RxyFYwPBUvToIQfAUxg";
+const GOOGLE_API_KEY = CONFIG.GOOGLE_API_KEY;
 
 // --- API Call ---
 async function callGoogleAI(prompt) {

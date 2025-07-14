@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const GOOGLE_API_KEY = "AIzaSyDPg-FHJt87jH6_RxyFYwPBUvToIQfAUxg";
+    const GOOGLE_API_KEY = CONFIG.GOOGLE_API_KEY;
 
     const promptInput = document.getElementById('prompt-input');
     const analyzeBtn = document.getElementById('analyze-btn');
