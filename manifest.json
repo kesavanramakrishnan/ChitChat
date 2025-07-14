@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "Groq Prompt Enhancer",
+  "name": "ChitChat",
   "description": "Enhances prompt writing on ChatGPT using Groq's LLaMA.",
   "version": "1.0",
   "permissions": [
