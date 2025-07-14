@@ -10,6 +10,8 @@ const CONFIG = {
     // Ollama Configuration (Local)
     OLLAMA_API_URL: "http://localhost:11434/api/generate",
     OLLAMA_MODEL: "phi3:mini", // or "llama3.2:3b", "mistral", phi3:mini.
+    // TIP: run `ollama list` in terminal to see the models you have pulled locally
+
     
 
     // ------ FOR LATER USE (prod) ------
