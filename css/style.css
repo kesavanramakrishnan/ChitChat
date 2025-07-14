@@ -25,6 +25,7 @@
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     overflow: hidden;
+    z-index: 10;
 }
 
 .chit-chat-main-ui::before {
@@ -158,12 +159,29 @@
     100% { transform: translateX(100%); }
 }
 
-/* The hover panel */
-.chit-chat-hover-panel {
+.cc-strength-progress-bar.loading {
+    background: linear-gradient(135deg, #90a4ae, #b0bec5);
+    animation: loadingPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes loadingPulse {
+    0%, 100% { 
+        opacity: 0.7;
+        transform: scaleX(1);
+    }
+    50% { 
+        opacity: 1;
+        transform: scaleX(1.02);
+    }
+}
+
+/* The expanded panel */
+.chit-chat-expanded-panel {
     position: absolute;
     bottom: 75px;
     right: 0;
-    width: 300px;
+    width: 320px;
+    max-height: 400px;
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.05) 100%);
     backdrop-filter: blur(40px);
     -webkit-backdrop-filter: blur(40px);
@@ -173,16 +191,17 @@
     box-shadow: 
         inset 0 1px 0 rgba(255, 255, 255, 0.15),
         0 1px 0 rgba(255, 255, 255, 0.05),
-        0 20px 60px rgba(0, 0, 0, 0.2);
+        0 20px 60px rgba(0, 0, 0, 0.3);
     opacity: 0;
-    transform: translateY(15px) scale(0.95);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translateY(15px) scale(0.9);
     pointer-events: none;
-    position: relative;
-    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 8;
+    overflow-y: auto;
+    transform-origin: bottom right;
 }
 
-.chit-chat-hover-panel::before {
+.chit-chat-expanded-panel::before {
     content: '';
     position: absolute;
     top: 0;
@@ -197,10 +216,55 @@
     border-radius: 20px;
 }
 
-.chit-chat-hover-panel.visible {
+/* Expanded state */
+#chit-chat-container.expanded .chit-chat-expanded-panel {
     opacity: 1;
     transform: translateY(0) scale(1);
     pointer-events: auto;
+}
+
+/* Panel header */
+.cc-panel-header {
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    position: relative;
+}
+
+.cc-panel-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: -20px;
+    right: -20px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.2), transparent);
+}
+
+.cc-panel-header h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: rgba(0, 0, 0, 0.9);
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
+    text-align: center;
+}
+
+.cc-initial-message {
+    padding: 16px;
+    margin-bottom: 16px;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    color: rgba(0, 0, 0, 0.7);
+    font-size: 13px;
+    line-height: 1.4;
+    text-align: center;
+}
+
+.cc-initial-message p {
+    margin: 0;
 }
 
 .cc-panel-section {
@@ -317,22 +381,53 @@
     word-wrap: break-word;
 }
 
-/* Strength progress bar color states */
-.cc-strength-progress-bar[data-strength="weak"] {
-    background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
-    box-shadow: 0 0 12px rgba(255, 107, 107, 0.4);
+#apply-prompt-btn {
+    margin-top: 12px;
+    padding: 10px 16px;
+    background: linear-gradient(135deg, #9c27b0 0%, #ab47bc 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 
+        inset 0 1px 0 rgba(255, 255, 255, 0.15),
+        0 1px 0 rgba(255, 255, 255, 0.05),
+        0 4px 16px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    font-family: inherit;
+    position: relative;
+    overflow: hidden;
 }
 
-.cc-strength-progress-bar[data-strength="moderate"] {
-    background: linear-gradient(135deg, #ffa726, #ffb74d);
-    box-shadow: 0 0 12px rgba(255, 167, 38, 0.4);
+#apply-prompt-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
 }
 
-.cc-strength-progress-bar[data-strength="strong"] {
-    background: linear-gradient(135deg, #66bb6a, #81c784);
-    box-shadow: 0 0 12px rgba(102, 187, 106, 0.4);
+#apply-prompt-btn:hover::before {
+    left: 100%;
 }
 
+#apply-prompt-btn:hover {
+    background: linear-gradient(135deg, #7e57c2 0%, #ab47bc 100%);
+    box-shadow: 
+        inset 0 1px 0 rgba(255, 255, 255, 0.2),
+        0 1px 0 rgba(255, 255, 255, 0.1),
+        0 0 0 2px rgba(126, 87, 194, 0.2),
+        0 6px 20px rgba(0, 0, 0, 0.15);
+    transform: translateY(-1px);
+}
+
+/* Strength progress bar will use dynamic colors set by JavaScript */
 .cc-strength-progress-bar[data-strength="loading"] {
     background: linear-gradient(135deg, #90a4ae, #b0bec5);
     box-shadow: 0 0 12px rgba(144, 164, 174, 0.4);
@@ -349,22 +444,41 @@
     transform: scale(1.05);
 }
 
-.chit-chat-hover-panel:hover {
-    box-shadow: 
-        inset 0 1px 0 rgba(255, 255, 255, 0.2),
-        0 1px 0 rgba(255, 255, 255, 0.1),
-        0 25px 70px rgba(0, 0, 0, 0.25);
-}
-
 /* Responsive adjustments */
 @media (max-width: 768px) {
-    .chit-chat-hover-panel {
+    .chit-chat-expanded-panel {
         width: 280px;
+        max-height: 70vh;
         right: -10px;
     }
     
     .cc-strength-progress-bar-container {
         width: 80px;
         margin: 0 12px 0 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    #chit-chat-container {
+        bottom: 15px;
+        right: 15px;
+    }
+    
+    .chit-chat-expanded-panel {
+        width: 260px;
+        max-height: 60vh;
+        right: -15px;
+        bottom: 70px;
+    }
+    
+    .cc-strength-progress-bar-container {
+        width: 70px;
+        margin: 0 10px 0 6px;
+    }
+    
+    .chit-chat-trigger-btn {
+        width: 36px;
+        height: 36px;
+        font-size: 16px;
     }
 } 
