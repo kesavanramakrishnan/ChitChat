@@ -99,8 +99,8 @@ curl -fsSL https://ollama.ai/install.sh | sh
 # Download a model
 ollama pull phi3:mini
 
-# Start Ollama service
-ollama serve
+# Start Ollama service with CORS enabled (REQUIRED for Chrome extension)
+OLLAMA_ORIGINS="*" OLLAMA_HOST="0.0.0.0:11434" ollama serve
 
 # Test the API
 curl -X POST http://localhost:11434/api/generate \
@@ -110,7 +110,14 @@ curl -X POST http://localhost:11434/api/generate \
 
 ## Troubleshooting
 
-- **CORS Errors**: Ensure Ollama is running with CORS enabled: `OLLAMA_ORIGINS="*" ollama serve`
+- **CORS Errors**: If you see "Access to fetch at 'http://localhost:11434/api/generate' has been blocked by CORS policy", run:
+  ```bash
+  # Stop any running Ollama instance
+  pkill ollama
+  
+  # Start Ollama with CORS enabled (REQUIRED)
+  OLLAMA_ORIGINS="*" OLLAMA_HOST="0.0.0.0:11434" ollama serve
+  ```
 - **No Analysis**: Check that your AI provider is configured and running
 - **Slow Responses**: Try a smaller model or adjust the timeout in `config.js`
 
