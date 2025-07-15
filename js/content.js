@@ -339,7 +339,7 @@ function startListeningToPrompt() {
         const debouncedAnalysis = debounce(() => {
             const currentPrompt = getPromptValue(promptElement);
             handleAutoAnalysis(currentPrompt);
-        }, 2000); // 2 second delay after user stops typing
+        }, 1000); // 2 second delay after user stops typing
 
         // Check if it's a textarea or a div and attach the correct listener
         if (promptElement.tagName.toLowerCase() === 'textarea') {
