@@ -184,6 +184,7 @@ body::before {
     padding-top: 16px;
     border-top: 1px solid rgba(0, 0, 0, 0.1);
     position: relative;
+    overflow: hidden;
 }
 
 .container #results-section::before {
@@ -194,6 +195,7 @@ body::before {
     right: -20px;
     height: 1px;
     background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.2), transparent);
+    pointer-events: none;
 }
 
 .container .strength-badge {
